@@ -49,7 +49,7 @@ def searchcom():
     return ["{:20}".format(data[0]).strip() for data in iterator]
 
 
-def save_raw_nmea(filename):
+def save_raw_nmea(filename, nmea_flag=False):
     print("Setting up connection")
     com_port = "/dev/ttyUSB0"
     baud_rate = 4800
@@ -83,17 +83,19 @@ def save_raw_nmea(filename):
 
     print(f"{len(raw_nmea)} waypoints exported.")
     ser.close()
-    write_raw_nmea(filename, raw_nmea)
+
+    if nmea_flag:
+        write_raw_nmea(filename, raw_nmea)
     return raw_nmea
 
 
-def save_all_waypoints(filename, debug=False):
+def save_all_waypoints(filename, nmea_flag=False, csv_flag=False, debug=False):
     if debug:
         with open("raw_nmea.nmea", "r") as nmea:
             rwa_nmea = nmea.readlines()
             rwa_nmea = list(map(str.strip, rwa_nmea))
     else:
-        rwa_nmea = save_raw_nmea(filename)
+        rwa_nmea = save_raw_nmea(filename, nmea_flag)
 
     list_wpts = []
 
@@ -102,14 +104,16 @@ def save_all_waypoints(filename, debug=False):
         if wpt:
             list_wpts.append(wpt)
 
-    write_parsed_nmea(filename, list_wpts)
+    if csv_flag:
+        write_parsed_nmea(filename, list_wpts)
 
     return list_wpts
 
 
 def write_to_gpx(list_wpts, file_name="test_gpx", debug=False):
+    Const = const.Const()
     if debug:
-        save_all_waypoints(file_name, debug=True)
+        save_all_waypoints(filename=file_name, debug=True)
     gpx_wpt = []
     gpx_wpt.append(Const.header)
     gpx_wpt.append(
@@ -133,8 +137,8 @@ def write_to_gpx(list_wpts, file_name="test_gpx", debug=False):
     write_raw_gpx(file_name, gpx_wpt)
 
 
-def save_gps_to_gpx(filename="GP32_test.gpx"):
-    wpts = save_all_waypoints(filename)
+def save_gps_to_gpx(filename="GP32_test.gpx", nmea_flag=False, csv_flag=False):
+    wpts = save_all_waypoints(filename=filename, nmea_flag=nmea_flag, csv_flag=csv_flag)
     write_to_gpx(wpts, filename)
 
 
