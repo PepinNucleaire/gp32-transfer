@@ -49,10 +49,10 @@ def searchcom():
     return ["{:20}".format(data[0]).strip() for data in iterator]
 
 
-def save_raw_nmea(filename, nmea_flag=False):
-    print("Setting up connection")
-    com_port = "/dev/ttyUSB0"
-    baud_rate = 4800
+def save_raw_nmea(filename, nmea_flag=False, ser=None):
+    if ser is None:
+        com_port = "/dev/ttyUSB0"
+        baud_rate = 4800
     ser = serial.Serial(
         com_port,
         baud_rate,

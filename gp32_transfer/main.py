@@ -6,7 +6,8 @@ from typing import Optional
 from .utils.serial_util import from_gpx_to_gps
 from pathlib import Path
 
-app = typer.Typer()
+help = "App used to import or export gpx with a Furuno GP32 gps"
+app = typer.Typer(help=help)
 
 
 @app.command("import")
@@ -36,9 +37,10 @@ def import_from_gps(
 
 
 @app.command("export")
-def export_to_gps(
-    gpx_file: Optional[Path] = typer.Option(None, help="gpx file to upload")
-):
+def export_to_gps(gpx_file: Path = typer.Argument(..., help="gpx file to upload")):
+    """
+    Export gps waypoints from gpx to GP32
+    """
     if gpx_file is None:
         typer.echo("No file entered")
         raise typer.Abort()
