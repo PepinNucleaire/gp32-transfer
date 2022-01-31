@@ -149,7 +149,6 @@ def save_gps_to_gpx(port, filename="GP32_test.gpx", nmea_flag=False, csv_flag=Fa
 
 
 def write_to_gps(list_nmea, port="/dev/ttyUSB0"):
-    print("Setting up connection")
     com_port = port
     baud_rate = 4800
     ser = serial.Serial(
@@ -166,7 +165,6 @@ def write_to_gps(list_nmea, port="/dev/ttyUSB0"):
         time.sleep(2)
 
     ser.open()
-    # print("Connection is good")
 
     for i in range(len(list_nmea)):
         print(f'{format((i+1) / len(list_nmea) *100, ".2f")} % completed')
