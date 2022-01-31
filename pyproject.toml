@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gp32-transfer"
-version = "0.2.1"
+version = "0.2.2"
 description = ""
 authors = ["Julien Muller <muller.julien.02@gmail.com>"]
 readme = "README.md"
