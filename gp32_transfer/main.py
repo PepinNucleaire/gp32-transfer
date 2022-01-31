@@ -1,13 +1,20 @@
+from click import Choice
 import typer
 import os
 import time
+from enum import Enum
+import click
+import gp32_transfer
 from .utils.serial_util import save_gps_to_gpx
-from typing import Optional
+from typing import List, Optional
 from .utils.serial_util import from_gpx_to_gps
 from pathlib import Path
 
+from gp32_transfer.utils import serial_util
+
 help = "App used to import or export gpx with a Furuno GP32 gps"
 app = typer.Typer(help=help)
+state = {"port": ""}
 
 
 @app.command("import")
@@ -33,7 +40,7 @@ def import_from_gps(
     typer.secho("and press 'Poursuivre'", fg=typer.colors.BRIGHT_YELLOW)
 
     typer.secho("\n" + "-" * 30 + "\n")
-    save_gps_to_gpx(filename=filename, nmea_flag=nmea, csv_flag=csv)
+    save_gps_to_gpx(port=state["port"],filename=filename, nmea_flag=nmea, csv_flag=csv)
 
 
 @app.command("export")
@@ -57,13 +64,29 @@ def export_to_gps(gpx_file: Path = typer.Argument(..., help="gpx file to upload"
     typer.echo("and press 'Poursuivre'")
 
     typer.echo("\n" + "-" * 30)
+    typer.secho(f"Have you completed the steps before? ", fg=typer.colors.BRIGHT_YELLOW)
     flag_start = typer.confirm("Is GP32 ready to receive data ?", default=True)
     if flag_start:
-        from_gpx_to_gps(gpx_file)
+        from_gpx_to_gps(gpx_file,state["port"])
 
     typer.echo("\n" + "-" * 30)
     typer.echo("End of program")
     raise typer.Exit()
+
+
+@app.callback()
+def set_serial_port():
+    ports_list = serial_util.searchcom()
+    typer.echo("\n" + "-" * 30)
+    port_chosen = click.prompt(
+        "Select a port to open",
+        show_default=True,
+        type=click.Choice([x for x in ports_list]),
+        default=ports_list[0],
+    )
+    state["port"] = port_chosen
+    typer.echo("\n" + "-" * 30)
+    typer.echo("You are ready to import/export on the GPS")
 
 
 # def main():

@@ -46,13 +46,12 @@ def searchcom():
             )
         )
     iterator = sorted(comports())
-    return ["{:20}".format(data[0]).strip() for data in iterator]
+    return [data[0].strip() for data in iterator]
 
 
-def save_raw_nmea(filename, nmea_flag=False, ser=None):
-    if ser is None:
-        com_port = "/dev/ttyUSB0"
-        baud_rate = 4800
+def save_raw_nmea(filename, nmea_flag=False, port="/dev/ttyUSB0"):
+    com_port = "/dev/ttyUSB0"
+    baud_rate = 4800
     ser = serial.Serial(
         com_port,
         baud_rate,
@@ -69,7 +68,6 @@ def save_raw_nmea(filename, nmea_flag=False, ser=None):
     raw_nmea = []
 
     ser.open()
-    print("Connection to GP32 is good")
     while True:
         line = str(ser.readline().decode("utf-8").strip())
         if "PFEC" in line:
@@ -85,17 +83,23 @@ def save_raw_nmea(filename, nmea_flag=False, ser=None):
     ser.close()
 
     if nmea_flag:
-        write_raw_nmea(filename, raw_nmea)
+        write_raw_nmea(file_name=filename, data=raw_nmea)
     return raw_nmea
 
 
-def save_all_waypoints(filename, nmea_flag=False, csv_flag=False, debug=False):
+def save_all_waypoints(
+    filename,
+    port,
+    nmea_flag=False,
+    csv_flag=False,
+    debug=False,
+):
     if debug:
         with open("raw_nmea.nmea", "r") as nmea:
             rwa_nmea = nmea.readlines()
             rwa_nmea = list(map(str.strip, rwa_nmea))
     else:
-        rwa_nmea = save_raw_nmea(filename, nmea_flag)
+        rwa_nmea = save_raw_nmea(filename=filename, port=port, nmea_flag=nmea_flag)
 
     list_wpts = []
 
@@ -137,14 +141,16 @@ def write_to_gpx(list_wpts, file_name="test_gpx", debug=False):
     write_raw_gpx(file_name, gpx_wpt)
 
 
-def save_gps_to_gpx(filename="GP32_test.gpx", nmea_flag=False, csv_flag=False):
-    wpts = save_all_waypoints(filename=filename, nmea_flag=nmea_flag, csv_flag=csv_flag)
+def save_gps_to_gpx(port, filename="GP32_test.gpx", nmea_flag=False, csv_flag=False):
+    wpts = save_all_waypoints(
+        filename=filename, nmea_flag=nmea_flag, csv_flag=csv_flag, port=port
+    )
     write_to_gpx(wpts, filename)
 
 
-def write_to_gps(list_nmea):
+def write_to_gps(list_nmea, port="/dev/ttyUSB0"):
     print("Setting up connection")
-    com_port = "/dev/ttyUSB0"
+    com_port = port
     baud_rate = 4800
     ser = serial.Serial(
         com_port,
@@ -160,7 +166,8 @@ def write_to_gps(list_nmea):
         time.sleep(2)
 
     ser.open()
-    print("Connection is good")
+    # print("Connection is good")
+
     for i in range(len(list_nmea)):
         print(f'{format((i+1) / len(list_nmea) *100, ".2f")} % completed')
         ser.write(list_nmea[i].encode("utf-8", "replace") + b"\r\n")
@@ -168,9 +175,9 @@ def write_to_gps(list_nmea):
     ser.close()
 
 
-def from_gpx_to_gps(gpx_file):
+def from_gpx_to_gps(gpx_file, port):
     listnmea = furuno_write.get_nmea_from_file(gpx_file)
-    write_to_gps(listnmea)
+    write_to_gps(listnmea, port)
 
 
 if __name__ == "__main__":
