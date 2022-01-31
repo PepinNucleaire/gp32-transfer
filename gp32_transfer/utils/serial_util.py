@@ -50,7 +50,7 @@ def searchcom():
 
 
 def save_raw_nmea(filename, nmea_flag=False, port="/dev/ttyUSB0"):
-    com_port = "/dev/ttyUSB0"
+    com_port = port
     baud_rate = 4800
     ser = serial.Serial(
         com_port,
