@@ -156,3 +156,4 @@ cython_debug/
 *.csv
 *.nmea
 *.gpx
+!doc/gp39/example_output.gpx
