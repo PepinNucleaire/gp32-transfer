@@ -19,13 +19,9 @@ def read_file(path_of_file):
 def extract_wpt(node):
     # find waypoint
     lon = float(node.attrib["lon"])
-    furuno_lon = round(
-        math.floor(abs(lon)) * 100 + ((abs(lon) - math.floor(abs(lon))) * 60), 3
-    )
+    furuno_lon = round(math.floor(abs(lon)) * 100 + ((abs(lon) - math.floor(abs(lon))) * 60), 3)
     lat = float(node.attrib["lat"])
-    furuno_lat = round(
-        math.floor(abs(lat)) * 100 + ((abs(lat) - math.floor(abs(lat))) * 60), 3
-    )
+    furuno_lat = round(math.floor(abs(lat)) * 100 + ((abs(lat) - math.floor(abs(lat))) * 60), 3)
     tmp_wpt = {
         "lon": "%09.3f" % furuno_lon,
         "NS": "S" if lon > 0 else "N",
@@ -44,24 +40,16 @@ def extract_wpt(node):
         if re.search("\}sym", wpt.tag) and wpt.text:
             splitSym = re.split(",", wpt.text)
             if len(splitSym) == 2:
-                foundmark = [
-                    f for f in Const.marks if (Const.marks[f] == splitSym[0].strip())
-                ]
-                tmp_wpt["mark"] = (
-                    foundmark[0] if len(foundmark) > 0 else Const.defaultMark
-                )
+                foundmark = [f for f in Const.marks if (Const.marks[f] == splitSym[0].strip())]
+                tmp_wpt["mark"] = foundmark[0] if len(foundmark) > 0 else Const.defaultMark
                 tmp_wpt["color"] = (
                     Const.colors.index(splitSym[1].strip())
                     if splitSym[1].strip() in Const.colors
                     else Const.defaultColor
                 )
             else:
-                foundmark = [
-                    f for f in Const.marks if (Const.marks[f] == wpt.text.strip())
-                ]
-                tmp_wpt["mark"] = (
-                    foundmark[0] if len(foundmark) > 0 else Const.defaultMark
-                )
+                foundmark = [f for f in Const.marks if (Const.marks[f] == wpt.text.strip())]
+                tmp_wpt["mark"] = foundmark[0] if len(foundmark) > 0 else Const.defaultMark
     return tmp_wpt
 
 
@@ -71,25 +59,15 @@ def extract_route(node):
         if re.search("\}name$", rte.tag) and rte.text:
             tmpRoute["name"] = rte.text.strip().upper()
             # take only 8 first symbols in route name  for furuno 32 version compatible!
-            tmpRoute["name"] = (
-                tmpRoute["name"] if len(tmpRoute["name"]) <= 8 else tmpRoute["name"][:8]
-            )
+            tmpRoute["name"] = tmpRoute["name"] if len(tmpRoute["name"]) <= 8 else tmpRoute["name"][:8]
 
         if re.search("\}desc$", rte.tag) and rte.text:
             tmpRoute["desc"] = rte.text.strip().upper()
-        if (
-            re.search("\}rtept$", rte.tag)
-            and ("lon" in rte.attrib)
-            and ("lat" in rte.attrib)
-        ):
+        if re.search("\}rtept$", rte.tag) and ("lon" in rte.attrib) and ("lat" in rte.attrib):
             lon = float(rte.attrib["lon"])
-            furuno_lon = round(
-                math.floor(abs(lon)) * 100 + ((abs(lon) - math.floor(abs(lon))) * 60), 3
-            )
+            furuno_lon = round(math.floor(abs(lon)) * 100 + ((abs(lon) - math.floor(abs(lon))) * 60), 3)
             lat = float(rte.attrib["lat"])
-            furuno_lat = round(
-                math.floor(abs(lat)) * 100 + ((abs(lat) - math.floor(abs(lat))) * 60), 3
-            )
+            furuno_lat = round(math.floor(abs(lat)) * 100 + ((abs(lat) - math.floor(abs(lat))) * 60), 3)
             tmpRoute["track"].append(
                 {
                     "lon": "%09.3f" % furuno_lon,
@@ -105,21 +83,13 @@ def extract_route(node):
             routesTrackCounter = len(tmpRoute["track"]) - 1
             for rtept in rte:
                 if re.search("\}name", rtept.tag) and rtept.text:
-                    tmpRoute["track"][routesTrackCounter][
-                        "name"
-                    ] = rtept.text.strip().upper()
+                    tmpRoute["track"][routesTrackCounter]["name"] = rtept.text.strip().upper()
                 if re.search("\}desc", rtept.tag) and rtept.text:
-                    tmpRoute["track"][routesTrackCounter][
-                        "desc"
-                    ] = rtept.text.strip().upper()
+                    tmpRoute["track"][routesTrackCounter]["desc"] = rtept.text.strip().upper()
                 if re.search("\}sym", rtept.tag) and rtept.text:
                     splitSym = re.split(",", rtept.text)
                     if len(splitSym) == 2:
-                        foundmark = [
-                            f
-                            for f in Const.marks
-                            if (Const.marks[f] == splitSym[0].strip())
-                        ]
+                        foundmark = [f for f in Const.marks if (Const.marks[f] == splitSym[0].strip())]
                         tmpRoute["track"][routesTrackCounter]["mark"] = (
                             foundmark[0] if len(foundmark) > 0 else Const.defaultMark
                         )
@@ -129,11 +99,7 @@ def extract_route(node):
                             else Const.defaultColor
                         )
                     else:
-                        foundmark = [
-                            f
-                            for f in Const.marks
-                            if (Const.marks[f] == rtept.text.strip())
-                        ]
+                        foundmark = [f for f in Const.marks if (Const.marks[f] == rtept.text.strip())]
                         tmpRoute["track"][routesTrackCounter]["mark"] = (
                             foundmark[0] if len(foundmark) > 0 else Const.defaultMark
                         )
@@ -151,18 +117,11 @@ def parse_gpx(gpx):
         list_wpt_in_double = []
 
         for child in gpx:
-            if (
-                re.search("\}wpt$", child.tag)
-                and ("lon" in child.attrib)
-                and ("lat" in child.attrib)
-            ):
+            if re.search("\}wpt$", child.tag) and ("lon" in child.attrib) and ("lat" in child.attrib):
                 # extract_wpt(child)
                 wpt = extract_wpt(child)
 
-                if (
-                    wpt["name"] in parseWaypoints.keys()
-                    and wpt["name"] not in list_wpt_in_double
-                ):
+                if wpt["name"] in parseWaypoints.keys() and wpt["name"] not in list_wpt_in_double:
                     list_wpt_in_double.append(wpt["name"])
 
                 if len(wpt["name"]) > 6:
@@ -194,9 +153,7 @@ def get_nmea_from_parsed_gpx(wpt_parsed, rte_parsed):
         color = value["color"]
         desc = str(value["mark"]) + str(value["desc"])
 
-        putData.append(
-            f"$PFEC,GPwpl,{lat},{ns},{lon},{ew},{name:6.6},{color},{desc:18.18},A,,,,"
-        )
+        putData.append(f"$PFEC,GPwpl,{lat},{ns},{lon},{ew},{name:6.6},{color},{desc:18.18},A,,,,")
 
     route_num = 0
     for _, value in rte_parsed.items():

@@ -40,7 +40,7 @@ def import_from_gps(
     typer.secho("and press 'Poursuivre'", fg=typer.colors.BRIGHT_YELLOW)
 
     typer.secho("\n" + "-" * 30 + "\n")
-    save_gps_to_gpx(port=state["port"],filename=filename, nmea_flag=nmea, csv_flag=csv)
+    save_gps_to_gpx(port=state["port"], filename=filename, nmea_flag=nmea, csv_flag=csv)
 
 
 @app.command("export")
@@ -67,7 +67,7 @@ def export_to_gps(gpx_file: Path = typer.Argument(..., help="gpx file to upload"
     typer.secho(f"Have you completed the steps before? ", fg=typer.colors.BRIGHT_YELLOW)
     flag_start = typer.confirm("Is GP32 ready to receive data ?", default=True)
     if flag_start:
-        from_gpx_to_gps(gpx_file=gpx_file,port=state["port"])
+        from_gpx_to_gps(gpx_file=gpx_file, port=state["port"])
 
     typer.echo("\n" + "-" * 30)
     typer.echo("End of program")

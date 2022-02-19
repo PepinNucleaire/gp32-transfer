@@ -120,11 +120,7 @@ def write_to_gpx(list_wpts, file_name="test_gpx", debug=False):
         save_all_waypoints(filename=file_name, debug=True)
     gpx_wpt = []
     gpx_wpt.append(Const.header)
-    gpx_wpt.append(
-        Const.metadata.format(
-            time=str(datetime.strftime(datetime.now(), "%Y-%m-%dT%H:%M:%SZ"))
-        )
-    )
+    gpx_wpt.append(Const.metadata.format(time=str(datetime.strftime(datetime.now(), "%Y-%m-%dT%H:%M:%SZ"))))
 
     for v in list_wpts:
         gpx_wpt.append(
@@ -142,9 +138,7 @@ def write_to_gpx(list_wpts, file_name="test_gpx", debug=False):
 
 
 def save_gps_to_gpx(port, filename="GP32_test.gpx", nmea_flag=False, csv_flag=False):
-    wpts = save_all_waypoints(
-        filename=filename, nmea_flag=nmea_flag, csv_flag=csv_flag, port=port
-    )
+    wpts = save_all_waypoints(filename=filename, nmea_flag=nmea_flag, csv_flag=csv_flag, port=port)
     write_to_gpx(wpts, filename)
 
 
