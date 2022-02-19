@@ -137,7 +137,7 @@ $ gp32_transfer export test_export.gpx
 
 ## Troubleshooting
 
-Waypoints should have a strict naming when you make an export to the GPS.
+Waypoints should have a strict naming when you make an export to the GPS. See [this document for more insights](doc/gp32/GP32_requirements.md)
 
 ### Requirements
 
