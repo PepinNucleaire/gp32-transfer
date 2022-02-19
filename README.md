@@ -94,13 +94,13 @@ Connect the GPS to the computer using a serial port
 - Blue to GND
 - Connect Red and Black to an external 12V Power Supply
 
-![](doc/GP32_PC.jpg)
+![](doc/gp32/GP32_PC.jpg)
 
 - Set up the I/O settings on the GPS with:
   - `DATA2 : NMEA-REM`
   - `NMEA VER: VER1.5`
 
-![](doc/iosetup.jpg)
+![](doc/gp32/iosetup.jpg)
 
 ### Downloading Waypoints
 
