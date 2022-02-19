@@ -32,14 +32,14 @@
   <p align="center">
     Interface which can save and upload waypoint to Furuno GP32 using RS232
     <br />
-    <a href="https://github.com/pepin_nucleaire/gp32-transfer"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/PepinNucleaire/gp32-transfer"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/pepin_nucleaire/gp32-transfer">View Demo</a>
+    <a href="https://github.com/PepinNucleaire/gp32-transfer">View Demo</a>
     ·
-    <a href="https://github.com/pepin_nucleaire/gp32-transfer/issues">Report Bug</a>
+    <a href="https://github.com/PepinNucleaire/gp32-transfer/issues">Report Bug</a>
     ·
-    <a href="https://github.com/pepin_nucleaire/gp32-transfer/issues">Request Feature</a>
+    <a href="https://github.com/PepinNucleaire/gp32-transfer/issues">Request Feature</a>
   </p>-->
 </div>
 
@@ -47,12 +47,6 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
@@ -73,8 +67,11 @@
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+This application was created in order to make transfer of GPX files created via OpenCPN easier for GP32 owners.
+It features :
+
+- Waypoints saving from the GPS to a NMEA, CSV, or GPX file
+- Upload waypoints to the GPS using a GPX file created from OpenCPN (other software may work but not tested)
 
 ### Installation
 
@@ -87,6 +84,65 @@ $ pip install gp32-transfer
 <!-- USAGE EXAMPLES -->
 
 ## Usage
+
+### Connection to the computer
+
+Connect the GPS to the computer using a serial port
+
+- Green to TXD
+- Yellow to RXD
+- Blue to GND
+- Connect Red and Black to an external 12V Power Supply
+
+![](doc/GP32_PC.jpg)
+
+- Set up the I/O settings on the GPS with:
+  - `DATA2 : NMEA-REM`
+  - `NMEA VER: VER1.5`
+
+![](doc/iosetup.jpg)
+
+### Downloading Waypoints
+
+In order to download the existing list of waypoints from the GP32 to a GPX file :
+
+1. On the GPS, go to `I/O settings`
+2. go to `Save WP/RTE -> PC?`
+3. On the computer launch a terminal and launch the utility with `import {name of output file}` option
+
+```shell
+$ gp32_transfer import test_import.gpx
+```
+
+4. Press `Continue` on the GPS
+5. Waypoints imported will be prompted on the terminal
+6. Wait for the process to be finished
+7. You can now import the resulting GPX file in OpenCPN!
+
+### Uploading waypoints to the GPS
+
+Once you have your GPX file exported and ready on Open CPN, follow these steps to import on the GP32 GPS:
+
+1. On the GPS, go to `I/O settings`
+2. Go to `Load WP/RTE <- PC ?`
+3. Press `Continue` on the GPS (/!\ Pressing this will reset all waypoints and routes currently in the GPS)
+4. On the computer launch a terminal and launch the utility with `export {name of GPX file}` option
+
+```shell
+$ gp32_transfer export test_export.gpx
+```
+
+5. The process will export the waypoints, wait for it to finish
+6. Your waypoints are exported to the GPS !
+
+## Troubleshooting
+
+Waypoints should have a strict naming when you make an export to the GPS.
+
+### Requirements
+
+- Names have a 6 character length maximum
+-
 
 <!-- ROADMAP -->
 
@@ -104,7 +160,7 @@ $ pip install gp32-transfer
   - [] Click-n-go ?
 - [] Compatitibilty with GP39
 
-See the [open issues](https://github.com/pepin_nucleaire/gp32-transfer/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/PepinNucleaire/gp32-transfer/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -139,7 +195,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Your Name - [@juju_on_mini](https://twitter.com/juju_on_mini) - muller.julien.02@gmail.com
 
-Project Link: [https://github.com/pepin_nucleaire/gp32-transfer](https://github.com/pepin_nucleaire/gp32-transfer)
+Project Link: [https://github.com/PepinNucleaire/gp32-transfer](https://github.com/PepinNucleaire/gp32-transfer)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -148,6 +204,7 @@ Project Link: [https://github.com/pepin_nucleaire/gp32-transfer](https://github.
 ## Acknowledgments
 
 - [russkiy78 and it furunotogpx project](https://github.com/russkiy78/furunotogpx) that I used as a really big inspiration
+- [Navigation-Mac for its images and info on connection of GP32](https://www.navigation-mac.fr/connecter-un-furuno-gp32-a-votre-mac/)
 - My dog
 
 <p align="right">(<a href="#top">back to top</a>)</p>
