@@ -32,19 +32,19 @@
   <p align="center">
     Interface which can save and upload waypoint to Furuno GP32 using RS232
     <br />
-    <a href="https://github.com/pepin_nucleaire/furuno-gpx-transfer"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/pepin_nucleaire/gp32-transfer"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/pepin_nucleaire/furuno-gpx-transfer">View Demo</a>
+    <a href="https://github.com/pepin_nucleaire/gp32-transfer">View Demo</a>
     ·
-    <a href="https://github.com/pepin_nucleaire/furuno-gpx-transfer/issues">Report Bug</a>
+    <a href="https://github.com/pepin_nucleaire/gp32-transfer/issues">Report Bug</a>
     ·
-    <a href="https://github.com/pepin_nucleaire/furuno-gpx-transfer/issues">Request Feature</a>
+    <a href="https://github.com/pepin_nucleaire/gp32-transfer/issues">Request Feature</a>
   </p>-->
 </div>
 
 <!-- TABLE OF CONTENTS -->
-<!-- <details>
+<details>
   <summary>Table of Contents</summary>
   <ol>
     <li>
@@ -67,7 +67,7 @@
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
-</details> -->
+</details>
 
 <!-- GETTING STARTED -->
 
@@ -77,6 +77,12 @@ This is an example of how you may give instructions on setting up your project l
 To get a local copy up and running follow these simple example steps.
 
 ### Installation
+
+Install `gp32-transfer` with `pip`
+
+```shell
+$ pip install gp32-transfer
+```
 
 <!-- USAGE EXAMPLES -->
 
@@ -89,15 +95,16 @@ To get a local copy up and running follow these simple example steps.
 - [x] ~~Save waypoints~~
   - [x] ~~Read from GP32~~
   - [x] ~~Save to GPX file compatible with OpenCPN~~
-- [] Upload Waypoints
+- [x] Upload Waypoints
   - [x] ~~Convert GPX to NMEA~~
   - [x] ~~Upload NMEA to GP32~~
 - [x] Make a nice app
   - [x] CLI
   - [] Web-based ?
   - [] Click-n-go ?
+- [] Compatitibilty with GP39
 
-See the [open issues](https://github.com/pepin_nucleaire/furuno-gpx-transfer/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/pepin_nucleaire/gp32-transfer/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -130,9 +137,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Your Name - [@juju_on_mini](https://twitter.com/juju_on_mini) - muller.julien.02@gmail.com.com
+Your Name - [@juju_on_mini](https://twitter.com/juju_on_mini) - muller.julien.02@gmail.com
 
-Project Link: [https://github.com/pepin_nucleaire/furuno-gpx-transfer](https://github.com/pepin_nucleaire/furuno-gpx-transfer)
+Project Link: [https://github.com/pepin_nucleaire/gp32-transfer](https://github.com/pepin_nucleaire/gp32-transfer)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

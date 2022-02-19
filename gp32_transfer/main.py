@@ -77,6 +77,8 @@ def export_to_gps(gpx_file: Path = typer.Argument(..., help="gpx file to upload"
 @app.callback()
 def set_serial_port():
     ports_list = serial_util.searchcom()
+    if len(ports_list) == 0:
+        typer.Abort("No Serial port detected")
     typer.echo("\n" + "-" * 30)
     port_chosen = click.prompt(
         "Select a port to open",
