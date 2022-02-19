@@ -1,11 +1,11 @@
 from xml.etree import cElementTree
 import re
 import math
-from . import const
+from . import const_gp32
 
 # Const.py
 
-Const = const.Const()
+Const = const_gp32.Const()
 
 
 def read_file(path_of_file):

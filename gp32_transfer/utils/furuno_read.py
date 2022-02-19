@@ -3,11 +3,11 @@ import math
 from xml.etree import cElementTree
 import serial
 
-from . import const
+from . import const_gp32
 
 # Const.py
 
-Const = const.Const()
+Const = const_gp32.Const()
 
 
 def parse_nmea_line(line):

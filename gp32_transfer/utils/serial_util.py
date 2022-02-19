@@ -6,7 +6,7 @@ import re
 import pandas as pd
 import time
 from datetime import datetime
-from . import const
+from . import const_gp32
 
 
 def write_raw_nmea(file_name, data):
@@ -115,7 +115,7 @@ def save_all_waypoints(
 
 
 def write_to_gpx(list_wpts, file_name="test_gpx", debug=False):
-    Const = const.Const()
+    Const = const_gp32.Const()
     if debug:
         save_all_waypoints(filename=file_name, debug=True)
     gpx_wpt = []
@@ -175,6 +175,6 @@ def from_gpx_to_gps(gpx_file, port):
 if __name__ == "__main__":
     # save_raw_nmea()
 
-    Const = const.Const()
+    Const = const_gp32.Const()
     list_nmea = furuno_write.get_nmea_from_file(gpx_file="test2.gpx")
     print(list_nmea)
