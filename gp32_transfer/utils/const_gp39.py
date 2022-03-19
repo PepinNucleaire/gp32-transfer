@@ -13,14 +13,14 @@ class Const(object):
         # self.routeStart = """  <rte>\n    <name>{name}</name>\n"""
         # self.routeEnd = """  </rte>\n\n"""
         self.footer = "</gpx>"
-        self.colors = ["Black", "Red", "Yellow", "Green", "Brown", "Purple", "Blue"]
+        self.colors = {["Black", "Red", "Yellow", "Green", "Brown", "Purple", "Blue"]}
         self.marks = {
-            "@q": "Pin",
-            "@r": "Flag",
-            "@s": "Flag",
-            "@t": "Fishing Area",
-            "@u": "Fishing Area",
-            "@v": "Fishing Area",
+            "@q": "Circle",
+            "@r": "Square",
+            "@s": "Diamond",
+            "@t": "1 Fishing Area",
+            "@u": "2 Fishing Area",
+            "@v": "3 Fishing Area",
             "@w": "Shipwreck",
             "@x": "Anchor",
             "@y": "Skull And Crossbones",
