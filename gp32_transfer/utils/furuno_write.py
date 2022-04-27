@@ -135,7 +135,7 @@ def parse_gpx(gpx):
                 routesCounter += 1
 
         error = [list_name_longer_than_6, list_wpt_in_double]
-
+        print(len(list_name_longer_than_6))
         return (parseWaypoints, parseRoutes, error)
     except:
         print("Error parsing GPX")

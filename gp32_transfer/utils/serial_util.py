@@ -162,7 +162,9 @@ def write_to_gps(list_nmea, port="/dev/ttyUSB0"):
 
     for i in range(len(list_nmea)):
         print(f'{format((i+1) / len(list_nmea) *100, ".2f")} % completed')
+        print(list_nmea[i])
         ser.write(list_nmea[i].encode("utf-8", "replace") + b"\r\n")
+        time.sleep(0.2)
 
     ser.close()
 

@@ -4,9 +4,9 @@ import time
 from enum import Enum
 import click
 import gp32_transfer
-from .utils.serial_util import save_gps_to_gpx
+from utils.serial_util import save_gps_to_gpx
 from typing import List, Optional
-from .utils.serial_util import from_gpx_to_gps
+from utils.serial_util import from_gpx_to_gps
 from pathlib import Path
 
 from gp32_transfer.utils import serial_util
@@ -76,6 +76,8 @@ def export_to_gps(gpx_file: Path = typer.Argument(..., help="gpx file to upload"
 @app.callback()
 def set_serial_port():
     ports_list = serial_util.searchcom()
+    ports_list = [(i) for i in ports_list if "serial" in i]
+
     if len(ports_list) == 0:
         typer.Abort("No Serial port detected")
     typer.echo("\n" + "-" * 30)
